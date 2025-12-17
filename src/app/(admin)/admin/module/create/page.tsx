@@ -9,7 +9,10 @@ import { ArrowLeft, Save, Plus, Trash2, Loader2, GripVertical, UploadCloud, X, I
 import "react-quill-new/dist/quill.snow.css"; 
 
 // Import ReactQuill secara dinamis
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill-new"), { 
+  ssr: false,
+  loading: () => <div className="h-[500px] bg-zinc-900 animate-pulse rounded-xl" /> // Skeleton Loader
+});
 
 export default function CreateModulePage() {
   const router = useRouter();

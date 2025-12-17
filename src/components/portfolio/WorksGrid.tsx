@@ -1,7 +1,8 @@
-// src/components/portfoliosection/WorksGrid.tsx
+// src/components/portfolio/WorksGrid.tsx
 "use client";
 import React, { useRef, useLayoutEffect } from "react";
-import Link from "next/link"; // 1. Import Link
+import Link from "next/link";
+import Image from "next/image"; // Pastikan import Image
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Work } from "@/types";
@@ -11,13 +12,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function WorksGrid({ works }: { works: Work[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  // Ubah tipe ref array ke HTMLAnchorElement karena kita pakai Link
-  const cardsRef = useRef<(HTMLAnchorElement | null)[]>([]); 
+  const cardsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  // --- HELPER: Hapus HTML Tag dari String ---
+  // Helper: Hapus tag HTML dari deskripsi
   const stripHtml = (html: string) => {
     if (!html) return "";
-    return html.replace(/<[^>]*>?/gm, ''); // Regex hapus tag HTML
+    return html.replace(/<[^>]*>?/gm, ''); 
   };
 
   useLayoutEffect(() => {
@@ -26,15 +26,15 @@ export default function WorksGrid({ works }: { works: Work[] }) {
     const ctx = gsap.context(() => {
       // ENTRANCE ANIMATION
       gsap.from(cardsRef.current, {
-        y: -100,
+        y: 100,
         opacity: 0,
-        rotateX: 45,
-        duration: 1,
+        rotateX: 15,
+        duration: 0.8,
         stagger: 0.1,
-        ease: "back.out(1.5)",
+        ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 75%",
+          start: "top 80%",
         }
       });
     }, containerRef);
@@ -42,7 +42,7 @@ export default function WorksGrid({ works }: { works: Work[] }) {
     return () => ctx.revert();
   }, [works]);
 
-  // --- INTERAKSI MOUSE ---
+  // --- INTERAKSI MOUSE (3D Tilt) ---
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>, index: number) => {
     const card = cardsRef.current[index];
     if (!card) return;
@@ -54,8 +54,9 @@ export default function WorksGrid({ works }: { works: Work[] }) {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const rotateX = ((y - centerY) / centerY) * -10; 
-    const rotateY = ((x - centerX) / centerX) * 10;
+    // Rotasi halus
+    const rotateX = ((y - centerY) / centerY) * -5; 
+    const rotateY = ((x - centerX) / centerX) * 5;
 
     gsap.to(card, {
       rotateX: rotateX,
@@ -65,23 +66,17 @@ export default function WorksGrid({ works }: { works: Work[] }) {
       transformPerspective: 1000,
     });
 
+    // Gerakkan Glow
     const glow = card.querySelector(".hover-glow") as HTMLElement;
-    gsap.to(glow, {
-      x: x,
-      y: y,
-      opacity: 0.6,
-      duration: 0.2,
-      ease: "power2.out"
-    });
-
-    const content = card.querySelector(".card-content") as HTMLElement;
-    gsap.to(content, {
-      x: (x - centerX) * 0.1, 
-      y: (y - centerY) * 0.1,
-      z: 50,
-      duration: 0.4,
-      ease: "power2.out"
-    });
+    if(glow) {
+        gsap.to(glow, {
+            x: x,
+            y: y,
+            opacity: 0.4, // Lebih subtle
+            duration: 0.2,
+            ease: "power2.out"
+        });
+    }
   };
 
   const handleMouseLeave = (index: number) => {
@@ -91,19 +86,16 @@ export default function WorksGrid({ works }: { works: Work[] }) {
     gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" });
     
     const glow = card.querySelector(".hover-glow") as HTMLElement;
-    gsap.to(glow, { opacity: 0, duration: 0.5 });
-
-    const content = card.querySelector(".card-content") as HTMLElement;
-    gsap.to(content, { x: 0, y: 0, z: 0, duration: 0.5 });
+    if(glow) gsap.to(glow, { opacity: 0, duration: 0.5 });
   };
 
   if (works.length === 0) return null;
 
   return (
-    <section ref={containerRef} className="py-32 px-6 md:px-20 bg-zinc-950 relative overflow-hidden">
+    <section ref={containerRef} className="py-20 md:py-32 bg-zinc-950 relative overflow-hidden">
       
       {/* Background Grid Tech */}
-      <div className="absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] bg-size-[40px_40px] opacity-10 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] [background-size:40px_40px] opacity-10 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -125,26 +117,19 @@ export default function WorksGrid({ works }: { works: Work[] }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
             {works.map((work, i) => (
-                // 2. Ganti div dengan Link agar bisa diklik
                 <Link 
-                    href={`/work/${work.id}`} // Arahkan ke detail page
+                    href={`/work/${work.id}`} 
                     key={work.id}
                     ref={(el) => { if(el) cardsRef.current[i] = el; }}
                     onMouseMove={(e) => handleMouseMove(e, i)}
                     onMouseLeave={() => handleMouseLeave(i)}
-                    className="group relative bg-zinc-900/80 border border-white/10 rounded-2xl min-h-80 flex flex-col justify-between overflow-hidden cursor-pointer backdrop-blur-sm transform-style-3d will-change-transform"
+                    className="group relative bg-zinc-900/80 border border-white/10 rounded-2xl min-h-[320px] flex flex-col justify-between overflow-hidden cursor-pointer backdrop-blur-sm transform-style-3d will-change-transform block"
                 >
                     {/* LIQUID NEON GLOW */}
                     <div 
                         className="hover-glow absolute w-[300px] h-[300px] bg-blue-600/30 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none transition-opacity duration-300 z-0"
                         style={{ top: 0, left: 0 }}
                     ></div>
-
-                    {/* TECH DECORATIONS */}
-                    <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"></div>
-                    <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"></div>
-                    <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"></div>
-                    <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"></div>
 
                     {/* CARD CONTENT */}
                     <div className="card-content relative z-10 p-8 flex flex-col h-full justify-between transform-style-3d">
@@ -159,7 +144,7 @@ export default function WorksGrid({ works }: { works: Work[] }) {
                                 {work.title}
                             </h3>
                             
-                            {/* Desc: Gunakan stripHtml */}
+                            {/* Desc */}
                             <p className="text-gray-400 text-sm line-clamp-3 leading-relaxed">
                                 {stripHtml(work.content)}
                             </p>

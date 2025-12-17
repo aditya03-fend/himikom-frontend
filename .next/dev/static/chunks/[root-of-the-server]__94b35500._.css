@@ -270,7 +270,6 @@
     --color-green-400: #05df72;
     --color-green-500: #00c758;
     --color-green-600: #00a544;
-    --color-green-900: #0d542b;
     --color-cyan-400: #00d2ef;
     --color-cyan-500: #00b7d7;
     --color-blue-100: #dbeafe;
@@ -383,7 +382,6 @@
       --color-green-400: lab(78.503% -64.9265 39.7492);
       --color-green-500: lab(70.5521% -66.5147 45.8072);
       --color-green-600: lab(59.0978% -58.6621 41.2579);
-      --color-green-900: lab(30.797% -29.6927 17.382);
       --color-cyan-400: lab(76.6045% -40.9406 -29.6231);
       --color-cyan-500: lab(67.805% -35.3952 -30.2018);
       --color-blue-100: lab(92.0301% -2.24757 -11.6453);
@@ -673,10 +671,6 @@
     pointer-events: none;
   }
 
-  .visible {
-    visibility: visible;
-  }
-
   .absolute {
     position: absolute;
   }
@@ -837,8 +831,8 @@
     z-index: -1;
   }
 
-  .z-\[60\] {
-    z-index: 60;
+  .z-\[9999\] {
+    z-index: 9999;
   }
 
   .order-1 {
@@ -1021,7 +1015,7 @@
     display: inline-flex;
   }
 
-  .aspect-4\/5, .aspect-\[4\/5\] {
+  .aspect-4\/5 {
     aspect-ratio: 4 / 5;
   }
 
@@ -1169,10 +1163,6 @@
     min-height: 320px;
   }
 
-  .min-h-\[400px\] {
-    min-height: 400px;
-  }
-
   .min-h-\[500px\] {
     min-height: 500px;
   }
@@ -1231,10 +1221,6 @@
 
   .w-32 {
     width: calc(var(--spacing) * 32);
-  }
-
-  .w-48 {
-    width: calc(var(--spacing) * 48);
   }
 
   .w-52 {
@@ -1470,6 +1456,10 @@
     flex-direction: column;
   }
 
+  .flex-col-reverse {
+    flex-direction: column-reverse;
+  }
+
   .flex-wrap {
     flex-wrap: wrap;
   }
@@ -1636,10 +1626,6 @@
 
   .rounded-4xl {
     border-radius: var(--radius-4xl);
-  }
-
-  .rounded-\[2rem\] {
-    border-radius: 2rem;
   }
 
   .rounded-full {
@@ -2027,16 +2013,6 @@
     background-color: var(--color-green-600);
   }
 
-  .bg-green-900\/30 {
-    background-color: #0d542b4d;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-green-900\/30 {
-      background-color: color-mix(in oklab, var(--color-green-900) 30%, transparent);
-    }
-  }
-
   .bg-pink-500\/10 {
     background-color: #f6339a1a;
   }
@@ -2114,16 +2090,6 @@
   @supports (color: color-mix(in lab, red, red)) {
     .bg-red-600\/90 {
       background-color: color-mix(in oklab, var(--color-red-600) 90%, transparent);
-    }
-  }
-
-  .bg-red-900\/30 {
-    background-color: #82181a4d;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-red-900\/30 {
-      background-color: color-mix(in oklab, var(--color-red-900) 30%, transparent);
     }
   }
 
@@ -2456,7 +2422,7 @@
     background-size: 32px 32px;
   }
 
-  .bg-\[size\:40px_40px\], .bg-size-\[40px_40px\] {
+  .bg-size-\[40px_40px\] {
     background-size: 40px 40px;
   }
 
@@ -3575,18 +3541,6 @@
   }
 
   @media (hover: hover) {
-    .hover\:border-red-500\/30:hover {
-      border-color: #fb2c364d;
-    }
-
-    @supports (color: color-mix(in lab, red, red)) {
-      .hover\:border-red-500\/30:hover {
-        border-color: color-mix(in oklab, var(--color-red-500) 30%, transparent);
-      }
-    }
-  }
-
-  @media (hover: hover) {
     .hover\:border-white:hover {
       border-color: var(--color-white);
     }
@@ -3677,12 +3631,6 @@
   }
 
   @media (hover: hover) {
-    .hover\:bg-green-500:hover {
-      background-color: var(--color-green-500);
-    }
-  }
-
-  @media (hover: hover) {
     .hover\:bg-green-500\/10:hover {
       background-color: #00c7581a;
     }
@@ -3691,18 +3639,6 @@
       .hover\:bg-green-500\/10:hover {
         background-color: color-mix(in oklab, var(--color-green-500) 10%, transparent);
       }
-    }
-  }
-
-  @media (hover: hover) {
-    .hover\:bg-green-600:hover {
-      background-color: var(--color-green-600);
-    }
-  }
-
-  @media (hover: hover) {
-    .hover\:bg-red-500:hover {
-      background-color: var(--color-red-500);
     }
   }
 
@@ -3732,18 +3668,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       .hover\:bg-red-900\/20:hover {
         background-color: color-mix(in oklab, var(--color-red-900) 20%, transparent);
-      }
-    }
-  }
-
-  @media (hover: hover) {
-    .hover\:bg-red-900\/50:hover {
-      background-color: #82181a80;
-    }
-
-    @supports (color: color-mix(in lab, red, red)) {
-      .hover\:bg-red-900\/50:hover {
-        background-color: color-mix(in oklab, var(--color-red-900) 50%, transparent);
       }
     }
   }
@@ -3805,12 +3729,6 @@
   @media (hover: hover) {
     .hover\:text-blue-300:hover {
       color: var(--color-blue-300);
-    }
-  }
-
-  @media (hover: hover) {
-    .hover\:text-blue-400:hover {
-      color: var(--color-blue-400);
     }
   }
 
@@ -4098,13 +4016,6 @@
   }
 
   @media (min-width: 48rem) {
-    .md\:bg-gradient-to-r {
-      --tw-gradient-position: to right in oklab;
-      background-image: linear-gradient(var(--tw-gradient-stops));
-    }
-  }
-
-  @media (min-width: 48rem) {
     .md\:from-zinc-900 {
       --tw-gradient-from: var(--color-zinc-900);
       --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -4139,6 +4050,12 @@
   @media (min-width: 48rem) {
     .md\:px-20 {
       padding-inline: calc(var(--spacing) * 20);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:py-32 {
+      padding-block: calc(var(--spacing) * 32);
     }
   }
 
@@ -4442,11 +4359,6 @@
     font-weight: var(--font-weight-medium) !important;
   }
 
-  .\[\&_a\]\:font-medium a {
-    --tw-font-weight: var(--font-weight-medium);
-    font-weight: var(--font-weight-medium);
-  }
-
   .\[\&_a\]\:font-medium\! a {
     --tw-font-weight: var(--font-weight-medium) !important;
     font-weight: var(--font-weight-medium) !important;
@@ -4454,10 +4366,6 @@
 
   .\[\&_a\]\:\!text-blue-400 a {
     color: var(--color-blue-400) !important;
-  }
-
-  .\[\&_a\]\:text-blue-400 a {
-    color: var(--color-blue-400);
   }
 
   .\[\&_a\]\:text-blue-400\! a {
@@ -4468,10 +4376,6 @@
     text-decoration-line: underline !important;
   }
 
-  .\[\&_a\]\:underline a {
-    text-decoration-line: underline;
-  }
-
   .\[\&_a\]\:underline\! a {
     text-decoration-line: underline !important;
   }
@@ -4479,12 +4383,6 @@
   @media (hover: hover) {
     .hover\:\[\&_a\]\:\!text-blue-300:hover a {
       color: var(--color-blue-300) !important;
-    }
-  }
-
-  @media (hover: hover) {
-    .hover\:\[\&_a\]\:text-blue-300:hover a {
-      color: var(--color-blue-300);
     }
   }
 
@@ -4499,11 +4397,6 @@
     font-weight: var(--font-weight-bold) !important;
   }
 
-  .\[\&_b\]\:font-bold b {
-    --tw-font-weight: var(--font-weight-bold);
-    font-weight: var(--font-weight-bold);
-  }
-
   .\[\&_b\]\:font-bold\! b {
     --tw-font-weight: var(--font-weight-bold) !important;
     font-weight: var(--font-weight-bold) !important;
@@ -4511,10 +4404,6 @@
 
   .\[\&_b\]\:\!text-white b {
     color: var(--color-white) !important;
-  }
-
-  .\[\&_b\]\:text-white b {
-    color: var(--color-white);
   }
 
   .\[\&_b\]\:text-white\! b {
@@ -4535,20 +4424,12 @@
     border-color: var(--color-blue-500) !important;
   }
 
-  .\[\&_blockquote\]\:border-blue-500 blockquote {
-    border-color: var(--color-blue-500);
-  }
-
   .\[\&_blockquote\]\:border-blue-500\! blockquote {
     border-color: var(--color-blue-500) !important;
   }
 
   .\[\&_blockquote\]\:\!pl-4 blockquote {
     padding-left: calc(var(--spacing) * 4) !important;
-  }
-
-  .\[\&_blockquote\]\:pl-4 blockquote {
-    padding-left: calc(var(--spacing) * 4);
   }
 
   .\[\&_blockquote\]\:pl-4\! blockquote {
@@ -4559,20 +4440,12 @@
     color: var(--color-gray-400) !important;
   }
 
-  .\[\&_blockquote\]\:text-gray-400 blockquote {
-    color: var(--color-gray-400);
-  }
-
   .\[\&_blockquote\]\:text-gray-400\! blockquote {
     color: var(--color-gray-400) !important;
   }
 
   .\[\&_blockquote\]\:\!italic blockquote {
     font-style: italic !important;
-  }
-
-  .\[\&_blockquote\]\:italic blockquote {
-    font-style: italic;
   }
 
   .\[\&_blockquote\]\:italic\! blockquote {
@@ -4583,20 +4456,12 @@
     background-color: #0000 !important;
   }
 
-  .\[\&_code\]\:bg-transparent code {
-    background-color: #0000;
-  }
-
   .\[\&_code\]\:bg-transparent\! code {
     background-color: #0000 !important;
   }
 
   .\[\&_code\]\:\!font-mono code {
     font-family: var(--font-mono) !important;
-  }
-
-  .\[\&_code\]\:font-mono code {
-    font-family: var(--font-mono);
   }
 
   .\[\&_code\]\:font-mono\! code {
@@ -4608,11 +4473,6 @@
     line-height: var(--tw-leading, var(--text-sm--line-height)) !important;
   }
 
-  .\[\&_code\]\:text-sm code {
-    font-size: var(--text-sm);
-    line-height: var(--tw-leading, var(--text-sm--line-height));
-  }
-
   .\[\&_code\]\:text-sm\! code {
     font-size: var(--text-sm) !important;
     line-height: var(--tw-leading, var(--text-sm--line-height)) !important;
@@ -4620,10 +4480,6 @@
 
   .\[\&_code\]\:\!text-green-400 code {
     color: var(--color-green-400) !important;
-  }
-
-  .\[\&_code\]\:text-green-400 code {
-    color: var(--color-green-400);
   }
 
   .\[\&_code\]\:text-green-400\! code {
@@ -4634,20 +4490,12 @@
     color: var(--color-gray-200) !important;
   }
 
-  .\[\&_em\]\:text-gray-200 em {
-    color: var(--color-gray-200);
-  }
-
   .\[\&_em\]\:text-gray-200\! em {
     color: var(--color-gray-200) !important;
   }
 
   .\[\&_em\]\:\!italic em {
     font-style: italic !important;
-  }
-
-  .\[\&_em\]\:italic em {
-    font-style: italic;
   }
 
   .\[\&_em\]\:italic\! em {
@@ -4718,10 +4566,6 @@
     margin-bottom: calc(var(--spacing) * 3) !important;
   }
 
-  .\[\&_h3\]\:bg-transparent\! h3 {
-    background-color: #0000 !important;
-  }
-
   .\[\&_h3\]\:\!text-xl h3 {
     font-size: var(--text-xl) !important;
     line-height: var(--tw-leading, var(--text-xl--line-height)) !important;
@@ -4734,10 +4578,6 @@
 
   .\[\&_h3\]\:\!text-white h3 {
     color: var(--color-white) !important;
-  }
-
-  .\[\&_h4\]\:bg-transparent\! h4 {
-    background-color: #0000 !important;
   }
 
   .\[\&_li\]\:\!mb-2 li {
@@ -4773,17 +4613,8 @@
     line-height: var(--leading-relaxed) !important;
   }
 
-  .\[\&_p\]\:leading-relaxed\! p {
-    --tw-leading: var(--leading-relaxed) !important;
-    line-height: var(--leading-relaxed) !important;
-  }
-
   .\[\&_pre\]\:\!overflow-x-auto pre {
     overflow-x: auto !important;
-  }
-
-  .\[\&_pre\]\:overflow-x-auto pre {
-    overflow-x: auto;
   }
 
   .\[\&_pre\]\:overflow-x-auto\! pre {
@@ -4792,10 +4623,6 @@
 
   .\[\&_pre\]\:\!rounded-xl pre {
     border-radius: var(--radius-xl) !important;
-  }
-
-  .\[\&_pre\]\:rounded-xl pre {
-    border-radius: var(--radius-xl);
   }
 
   .\[\&_pre\]\:rounded-xl\! pre {
@@ -4822,16 +4649,6 @@
     }
   }
 
-  .\[\&_pre\]\:border-white\/10 pre {
-    border-color: #ffffff1a;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .\[\&_pre\]\:border-white\/10 pre {
-      border-color: color-mix(in oklab, var(--color-white) 10%, transparent);
-    }
-  }
-
   .\[\&_pre\]\:border-white\/10\! pre {
     border-color: #ffffff1a !important;
   }
@@ -4846,10 +4663,6 @@
     background-color: var(--color-zinc-900) !important;
   }
 
-  .\[\&_pre\]\:bg-zinc-900 pre {
-    background-color: var(--color-zinc-900);
-  }
-
   .\[\&_pre\]\:bg-zinc-900\! pre {
     background-color: var(--color-zinc-900) !important;
   }
@@ -4858,24 +4671,12 @@
     padding: calc(var(--spacing) * 4) !important;
   }
 
-  .\[\&_pre\]\:p-4 pre {
-    padding: calc(var(--spacing) * 4);
-  }
-
   .\[\&_pre\]\:p-4\! pre {
     padding: calc(var(--spacing) * 4) !important;
   }
 
-  .\[\&_span\]\:\!bg-transparent span {
-    background-color: #0000 !important;
-  }
-
   .\[\&_span\]\:bg-transparent\! span {
     background-color: #0000 !important;
-  }
-
-  .\[\&_span\]\:\!text-gray-400 span {
-    color: var(--color-gray-400) !important;
   }
 
   .\[\&_span\]\:text-gray-300\! span {
@@ -4891,11 +4692,6 @@
     font-weight: var(--font-weight-bold) !important;
   }
 
-  .\[\&_strong\]\:font-bold strong {
-    --tw-font-weight: var(--font-weight-bold);
-    font-weight: var(--font-weight-bold);
-  }
-
   .\[\&_strong\]\:font-bold\! strong {
     --tw-font-weight: var(--font-weight-bold) !important;
     font-weight: var(--font-weight-bold) !important;
@@ -4903,10 +4699,6 @@
 
   .\[\&_strong\]\:\!text-white strong {
     color: var(--color-white) !important;
-  }
-
-  .\[\&_strong\]\:text-white strong {
-    color: var(--color-white);
   }
 
   .\[\&_strong\]\:text-white\! strong {
@@ -4937,11 +4729,6 @@
     margin-bottom: calc(var(--spacing) * 4);
   }
 
-  .\[\&\>h1\]\:text-2xl > h1 {
-    font-size: var(--text-2xl);
-    line-height: var(--tw-leading, var(--text-2xl--line-height));
-  }
-
   .\[\&\>h1\]\:text-3xl > h1 {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
@@ -4957,16 +4744,8 @@
     font-weight: var(--font-weight-bold);
   }
 
-  .\[\&\>h2\]\:mt-6 > h2 {
-    margin-top: calc(var(--spacing) * 6);
-  }
-
   .\[\&\>h2\]\:mt-8 > h2 {
     margin-top: calc(var(--spacing) * 8);
-  }
-
-  .\[\&\>h2\]\:mb-3 > h2 {
-    margin-bottom: calc(var(--spacing) * 3);
   }
 
   .\[\&\>h2\]\:mb-4 > h2 {
@@ -4983,48 +4762,7 @@
     line-height: var(--tw-leading, var(--text-base--line-height));
   }
 
-  .\[\&\>h2\]\:text-xl > h2 {
-    font-size: var(--text-xl);
-    line-height: var(--tw-leading, var(--text-xl--line-height));
-  }
-
   .\[\&\>h2\]\:font-bold > h2 {
-    --tw-font-weight: var(--font-weight-bold);
-    font-weight: var(--font-weight-bold);
-  }
-
-  .\[\&\>h3\]\:mt-6 > h3 {
-    margin-top: calc(var(--spacing) * 6);
-  }
-
-  .\[\&\>h3\]\:mb-3 > h3 {
-    margin-bottom: calc(var(--spacing) * 3);
-  }
-
-  .\[\&\>h3\]\:text-xl > h3 {
-    font-size: var(--text-xl);
-    line-height: var(--tw-leading, var(--text-xl--line-height));
-  }
-
-  .\[\&\>h3\]\:font-bold > h3 {
-    --tw-font-weight: var(--font-weight-bold);
-    font-weight: var(--font-weight-bold);
-  }
-
-  .\[\&\>h4\]\:mt-6 > h4 {
-    margin-top: calc(var(--spacing) * 6);
-  }
-
-  .\[\&\>h4\]\:mb-3 > h4 {
-    margin-bottom: calc(var(--spacing) * 3);
-  }
-
-  .\[\&\>h4\]\:text-xl > h4 {
-    font-size: var(--text-xl);
-    line-height: var(--tw-leading, var(--text-xl--line-height));
-  }
-
-  .\[\&\>h4\]\:font-bold > h4 {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }

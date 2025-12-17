@@ -1,1 +1,9 @@
-{}
+{
+  "[project]/src/components/layout/MobileMenu.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/layout/MobileMenu.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/src_components_layout_MobileMenu_tsx_52d41de4._.js",
+      "static/chunks/src_components_layout_MobileMenu_tsx_52c50b1b._.js"
+    ]
+  }
+}

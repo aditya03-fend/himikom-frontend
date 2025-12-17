@@ -2,7 +2,7 @@
 "use client";
 import React, { useRef, useLayoutEffect } from "react";
 import Image from "next/image";
-import Link from "next/link"; // Import Link
+import Link from "next/link"; 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Program } from "@/types";
@@ -12,27 +12,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ProgramSection({ programs }: { programs: Program[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  // Ubah tipe ref array agar support anchor element (karena pakai Link)
   const cardsRef = useRef<(HTMLAnchorElement | HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
     if (programs.length === 0) return;
 
     const ctx = gsap.context(() => {
-      // Animasi Scale untuk efek tumpukan
       cardsRef.current.forEach((card, index) => {
         if (!card) return;
-        // Jangan animasikan kartu terakhir karena dia paling atas
         if (index === programs.length - 1) return;
 
         gsap.to(card, {
-          scale: 0.9, // Kartu belakang mengecil
-          opacity: 0.4, // Kartu belakang meredup
+          scale: 0.9, 
+          opacity: 0.4, 
           scrollTrigger: {
             trigger: card,
-            start: "top top", // Mulai saat kartu kena atas layar
-            end: "bottom top", // Selesai saat kartu lewat
-            scrub: true, // Animasi terikat scroll bar
+            start: "top top", 
+            end: "bottom top", 
+            scrub: true, 
           }
         });
       });
@@ -65,25 +62,29 @@ export default function ProgramSection({ programs }: { programs: Program[] }) {
       {/* STACKED CARDS CONTAINER */}
       <div className="max-w-5xl mx-auto flex flex-col gap-10 pb-20">
         {programs.map((program, index) => {
-          // Menghitung posisi 'top' agar kartu menumpuk rapi (Cascade)
           const stickyTop = 100 + index * 40; 
 
           return (
-            // PERUBAHAN DI SINI: Ganti div jadi Link
             <Link
-              href={`/program/${program.id}`} // Arahkan ke detail program
+              href={`/program/${program.id}`} 
               key={program.id}
               // @ts-ignore
-              ref={(el) => { cardsRef.current[index] = el; }} // Simpan ref untuk animasi
-              className="sticky block group" // Tambahkan 'block' dan 'group'
+              ref={(el) => { cardsRef.current[index] = el; }} 
+              className="sticky block group" 
               style={{ 
-                top: `${stickyTop}px`, // Kunci posisi sticky
-                zIndex: index + 1      // Pastikan urutan tumpukan benar
+                top: `${stickyTop}px`, 
+                zIndex: index + 1      
               }}
             >
-              <div className="relative bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl min-h-[500px] flex flex-col md:flex-row transition-all duration-300 group-hover:border-blue-500/50">
+              {/* PERUBAHAN UTAMA DI SINI:
+                  Ubah 'flex-col' menjadi 'flex-col-reverse'.
+                  Ini membuat elemen terakhir (Gambar) muncul di atas pada mobile,
+                  sedangkan elemen pertama (Konten) muncul di bawah.
+                  'md:flex-row' menjaga tampilan desktop tetap Kiri (Konten) - Kanan (Gambar).
+              */}
+              <div className="relative bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl min-h-[500px] flex flex-col-reverse md:flex-row transition-all duration-300 group-hover:border-blue-500/50">
                 
-                {/* 1. CONTENT (KIRI) */}
+                {/* 1. CONTENT (DOM: Urutan 1, Tampil Mobile: Bawah, Desktop: Kiri) */}
                 <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-between relative z-10 bg-zinc-900">
                   <div>
                     <div className="flex items-center gap-4 mb-8">
@@ -97,7 +98,6 @@ export default function ProgramSection({ programs }: { programs: Program[] }) {
                       {program.title}
                     </h3>
                     
-                    {/* Render HTML Content (Truncated) */}
                     <div
                       className="line-clamp-3 text-gray-400 [&>h1]:text-lg [&>h2]:text-base [&>p]:mb-2 [&_span]:bg-transparent! [&_span]:text-gray-400!"
                       dangerouslySetInnerHTML={{ __html: program.content }}
@@ -112,7 +112,7 @@ export default function ProgramSection({ programs }: { programs: Program[] }) {
                   </div>
                 </div>
 
-                {/* 2. IMAGE (KANAN) */}
+                {/* 2. IMAGE (DOM: Urutan 2, Tampil Mobile: Atas, Desktop: Kanan) */}
                 <div className="w-full md:w-1/2 relative h-[300px] md:h-auto overflow-hidden">
                     <Image
                         src={program.image}

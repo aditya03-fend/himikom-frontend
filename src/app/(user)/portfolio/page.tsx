@@ -1,36 +1,33 @@
+// src/app/portfolio/page.tsx
+import React, { Suspense } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PersonalWebGallery from "@/components/portfolio/PersonalWebGallery";
 import WorksGrid from "@/components/portfolio/WorksGrid";
 import AchievementList from "@/components/portfolio/AchievementList";
 import { Work, Achievement, Portfolio } from "@/types";
+import { Loader2 } from "lucide-react";
 
-export const dynamic = "force-dynamic";
+// Cache Data selama 60 detik (ISR)
+export const revalidate = 60;
 
-// Fetch Semua Data Sekaligus
+// Fetch Data di Server
 async function getData() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
   console.log("Fetching Portfolio Data from:", baseUrl);
 
   try {
     const [worksRes, achievementsRes, portfoliosRes] = await Promise.all([
-      // 1. PERBAIKAN: Gunakan endpoint SINGULAR (sesuai backend sebelumnya)
-      fetch(`${baseUrl}/api/work`, { cache: "no-store" }),       
-      fetch(`${baseUrl}/api/achievement`, { cache: "no-store" }), 
-      fetch(`${baseUrl}/api/portfolio`, { cache: "no-store" }),   
+      fetch(`${baseUrl}/api/work`, { next: { revalidate: 60 } }),       
+      fetch(`${baseUrl}/api/achievement`, { next: { revalidate: 60 } }), 
+      fetch(`${baseUrl}/api/portfolio`, { next: { revalidate: 60 } }),   
     ]);
 
-    // Debugging status response
-    if (!worksRes.ok) console.error("Work API Error:", worksRes.status);
-    if (!achievementsRes.ok) console.error("Achievement API Error:", achievementsRes.status);
-    if (!portfoliosRes.ok) console.error("Portfolio API Error:", portfoliosRes.status);
-
-    // 2. Parse JSON (Handle jika array kosong/error)
     const rawWorks: Work[] = worksRes.ok ? await worksRes.json() : [];
     const rawAchievements: Achievement[] = achievementsRes.ok ? await achievementsRes.json() : [];
     const rawPortfolios: Portfolio[] = portfoliosRes.ok ? await portfoliosRes.json() : [];
 
-    // 3. FILTER: Hanya ambil yang statusnya "PUBLISHED"
+    // Filter PUBLISHED
     const works = rawWorks.filter((w) => w.status === "PUBLISHED");
     const achievements = rawAchievements.filter((a) => a.status === "PUBLISHED");
     const portfolios = rawPortfolios.filter((p) => p.status === "PUBLISHED");
@@ -43,6 +40,13 @@ async function getData() {
   }
 }
 
+// Komponen Loading
+const LoadingState = () => (
+  <div className="w-full h-screen flex justify-center items-center bg-zinc-950">
+    <Loader2 className="animate-spin text-blue-500" size={40} />
+  </div>
+);
+
 export default async function PortfolioPage() {
   const { works, achievements, portfolios } = await getData();
 
@@ -50,18 +54,25 @@ export default async function PortfolioPage() {
     <main className="bg-black min-h-screen text-white selection:bg-yellow-500 selection:text-black">
       <Navbar />
 
-      {/* 1. PERSONAL WEB (Horizontal Scroll Pinned) */}
-      <PersonalWebGallery portfolios={portfolios} />
+      {/* Gunakan Suspense agar halaman tampil cepat, bagian berat nyusul */}
+      <Suspense fallback={<LoadingState />}>
+        
+        {/* 1. PERSONAL WEB (Client Component) */}
+        {/* Pastikan PersonalWebGallery juga pakai "use client" di dalamnya */}
+        <PersonalWebGallery portfolios={portfolios} />
 
-      <div className="relative z-10 bg-zinc-950">
-        {/* 2. KARYA (Grid 3D) */}
-        <WorksGrid works={works} />
+        <div className="relative z-10 bg-zinc-950">
+          {/* 2. KARYA (Client Component yang baru kita update) */}
+          <WorksGrid works={works} />
 
-        {/* 3. PRESTASI (List Reveal) */}
-        <AchievementList achievements={achievements} />
+          {/* 3. PRESTASI (Client Component) */}
+          {/* AchievementList juga harus pakai "use client" */}
+          <AchievementList achievements={achievements} />
 
-        <div className="h-20"></div>
-      </div>
+          <div className="h-20"></div>
+        </div>
+
+      </Suspense>
 
       <Footer />
     </main>

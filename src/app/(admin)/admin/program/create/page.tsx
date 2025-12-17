@@ -9,7 +9,10 @@ import { ArrowLeft, Save, Loader2, UploadCloud, X, Image as ImageIcon, Link as L
 import "react-quill-new/dist/quill.snow.css";
 
 // Import ReactQuill-New secara dinamis (No SSR)
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill-new"), { 
+  ssr: false,
+  loading: () => <div className="h-[500px] bg-zinc-900 animate-pulse rounded-xl" /> // Skeleton Loader
+});
 
 export default function CreateProgramPage() {
   const router = useRouter();

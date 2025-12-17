@@ -1,0 +1,18 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(admin)/layout,_N_T_/(admin)/admin/layout,_N_T_/(admin)/admin/achievement/layout,_N_T_/(admin)/admin/achievement/create/layout,_N_T_/(admin)/admin/achievement/create/page,_N_T_/admin/achievement/create"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGFkbWluKQ/admin/achievement/create/__PAGE__",
+    "/!KGFkbWluKQ/admin/achievement/create",
+    "/!KGFkbWluKQ/admin/achievement",
+    "/!KGFkbWluKQ/admin",
+    "/!KGFkbWluKQ",
+    "/_index",
+    "/_head"
+  ]
+}
