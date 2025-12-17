@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  /* Menggunakan variabel font dari next/font */
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-space);
+}
+
+body {
+  background-color: #050505; /* Hitam yang sedikit lebih terang agar elegan */
+  color: #ffffff;
+  font-family: var(--font-sans);
+}
+
+/* Utility untuk judul agar pakai font Space Grotesk */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Menyembunyikan scrollbar default browser (agar bersih) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

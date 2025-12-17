@@ -1,0 +1,3 @@
+{
+  "/(admin)/admin/portfolio/create/page": "app/(admin)/admin/portfolio/create/page.js"
+}

@@ -1,0 +1,9 @@
+{
+  "[project]/node_modules/.pnpm/react-quill-new@3.6.0_quill_e74aa409808eec09ec27ce52ca4743ee/node_modules/react-quill-new/lib/index.js [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/node_modules/.pnpm/react-quill-new@3.6.0_quill_e74aa409808eec09ec27ce52ca4743ee/node_modules/react-quill-new/lib/index.js [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/node_modules__pnpm_548a28c8._.js",
+      "static/chunks/4eaf2_react-quill-new_lib_index_b1300706.js"
+    ]
+  }
+}
